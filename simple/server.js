@@ -1,32 +1,46 @@
 const express = require('express');
-const { UseRender, SchemeManager, Config, ConfigKeys } = require('../server');
-const app = express()
-const port = 3000;
+const { UseRender, SchemeManager, Config } = require('../server'); // easy-viewer server exports;
+const logger = require('../lib/logger');
 
-const schemes = new SchemeManager();
-schemes.load(__dirname + '/schemes');
+function easyViewer() {
+    const app = express();
+    const port = 3000;
 
-const config = new Config();
+    const schemes = new SchemeManager();
+    schemes.load(__dirname + '/schemes');
 
-// If you want to use the default scheme, you can set the scheme name to the DEFAULT_SCHEME key. 
-config.set(ConfigKeys.VIEWS, __dirname + '/html');
+    const config = new Config();
+    config.set(config.names.views, __dirname + '/html');
+    config.set(config.names.defaultScheme, 'app');
+    config.set(config.names.ignoreErrors, false);
 
-// If you want to use the default scheme, you can set the scheme name to the DEFAULT_SCHEME key.
-config.set(ConfigKeys.DEFAULT_SCHEME, 'app');
+    app.use(UseRender);
 
-// If you want to ignore errors while rendering HTML files, you can set the value to true.
-config.set(ConfigKeys.IGNORE_ERRORS, true);
+    app.get('/', (req, res) => {
+        res.render('index', { title: 'Home', description: 'A minimal Easy Viewer example.' });
+    });
 
-app.use(UseRender);
+    // Dynamic pages: render templates from `simple/html/<name>.html`
+    // Example: GET /pages/about -> renders `about.html`
+    app.get('/pages/:name', (req, res) => {
+        const name = String(req.params.name || '').trim();
+        // basic validation — Rooter will also validate includes
+        if (!/^[A-Za-z0-9_\-\/]+$/.test(name)) return res.status(400).json({ status: 400, message: 'Invalid page name' });
+        const title = name.charAt(0).toUpperCase() + name.slice(1);
+        return res.render(name, { title, description: '' });
+    });
 
-app.get('/', (req, res) => {
-    res.renderer('index', { title: 'Express' });
-})
+    app.post('/', (req, res) => {
+        res.json({ status: 200, message: 'OK' });
+    });
 
-app.post('/', (req, res) => {
-    console.log('Posted');
-})
+    app.listen(port, () => {
+        console.info(`Express: http://localhost:${port}`);
+    });
+}
 
-app.listen(port, () => {
-    console.log(`Express: http://localhost:${port}`)
-})
+try {
+    easyViewer();
+} catch (err) {
+    logger.error(err);
+}

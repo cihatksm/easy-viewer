@@ -1,19 +1,24 @@
 {
   "name": "easy-viewer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Easy Viewer is a simple and easy to use viewer for your projects.",
   "main": "server.js",
   "scripts": {
     "start": "node simple/server.js",
     "dev": "nodemon simple/server.js",
-    "update": "npm run uninstall && update-modules && npm i && npm audit fix",
-    "uninstall": "rmdir node_modules /s /q && npm install update-modules@latest"
+    "test": "node simple/test.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
-  "author": "CihatKsm <me@cihatksm.com>",
+  "author": {
+    "name": "cihatksm",
+    "email": "me@cihatksm.com",
+    "url": "https://cihatksm.com/"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CihatKsm/easy-viewer.git"
+    "url": "git+https://github.com/cihatksm/easy-viewer.git"
   },
   "keywords": [
     "cihatksm",
@@ -22,11 +27,15 @@
     "easy-viewer"
   ],
   "dependencies": {
-    "colors": "^1.4.0"
+    "acorn": "^8.15.0",
+    "express": "^5.1.0"
   },
   "devDependencies": {
-    "express": "^4.21.1",
-    "nodemon": "^3.1.7",
-    "update-modules": "^0.1.5"
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.6.2",
+    "update-modules": "^0.3.1"
   }
 }

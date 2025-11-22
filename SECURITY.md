@@ -11,5 +11,4 @@ Once you submit a vulnerability, you can expect regular updates on its status.
 If the vulnerability is accepted, appropriate actions will be taken to address it.
 If it is declined, we will provide an explanation. Thank you for your cooperation.
 
-All rights reserved.
-cihatksm.com, 2024 © CihatKsm
+© 2025 All rights reserved - cihatksm.com
