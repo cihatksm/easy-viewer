@@ -20,6 +20,10 @@ function easyViewer() {
         res.render('index', { title: 'Home', description: 'A minimal Easy Viewer example.' });
     });
 
+    app.get('/none', (req, res) => {
+        res.render('none', { title: 'Home', description: 'A minimal Easy Viewer example.' }, 'none');
+    });
+
     // Dynamic pages: render templates from `simple/html/<name>.html`
     // Example: GET /pages/about -> renders `about.html`
     app.get('/pages/:name', (req, res) => {
