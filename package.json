@@ -28,7 +28,8 @@
   ],
   "dependencies": {
     "acorn": "^8.15.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "sanitize-html": "^2.17.0"
   },
   "devDependencies": {
     "eslint": "^9.39.1",
